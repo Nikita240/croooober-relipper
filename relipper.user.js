@@ -16,6 +16,7 @@ class Wheel {
     }
 
     relip(newWidth) {
+        newWidth = parseFloat(newWidth);
         let newOffset = Math.round(this.offset-(newWidth-this.width)/2*25.4);
         return new Wheel(this.height, newWidth, newOffset);
     }
@@ -51,32 +52,19 @@ if (!rearWheel.width) {
 console.log(frontWheel);
 console.log(rearWheel);
 
-let addWidths = function(targets, target=false) {
+let printWheels = function(wheelSetups) {
 
     let html = '<br><br>RELIPPED:<br>';
 
-    for (const target of targets) {
-        let newFrontWheel = frontWheel.relip(target.front);
-        let newRearWheel = rearWheel.relip(target.rear);
+    for (const setup of wheelSetups) {
 
-        if (target.highlight) {
-            html +=
-                '<b><br>Front: '
-                + newFrontWheel
-                + ' Rear: '
-                + newRearWheel
-                + '</b>';
+        if (setup.highlight) {
+            html += `<br>Front: ${setup.front} Rear: ${setup.rear}`;
         }
         else {
-            html +=
-                '<span style="color: #ccc"><br>Front: '
-                + newFrontWheel
-                + ' Rear: '
-                + newRearWheel
-                + '</span>';
+            html += `<span style="color: #ccc"><br>Front: ${setup.front} Rear: ${setup.rear}</span>`;
         }
     }
-
 
     column.html(column.html() + html);
 }
@@ -87,13 +75,9 @@ chrome.storage.sync.get({
 }, function(options) {
     const frontWidth = parseFloat(options.frontWidth);
     const rearWidth  = parseFloat(options.rearWidth);
-    addWidths([
-        { front: frontWidth-0.5, rear: rearWidth-0.5 },
-        { front: frontWidth, rear: rearWidth, highlight: true },
-        { front: frontWidth+0.5, rear: rearWidth+0.5 },
+    printWheels([
+        { front: frontWheel.relip(frontWidth-0.5), rear: rearWheel.relip(rearWidth-0.5) },
+        { front: frontWheel.relip(frontWidth),     rear: rearWheel.relip(rearWidth), highlight: true },
+        { front: frontWheel.relip(frontWidth+0.5), rear: rearWheel.relip(rearWidth+0.5) },
     ]);
 });
-// addWidths(8.5, 10.5);
-// addWidths(9, 11);
-// addWidths(9.5, 11.5);
-// addWidths(10, 12);
