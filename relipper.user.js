@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       "relipper"
 // @namespace  Relip
-// @version    0.1
+// @version    0.2
 // @description  HI Adel
 // @match      http://www.croooober.com/*
 // @grant      none
@@ -76,8 +76,10 @@ chrome.storage.sync.get({
     const frontWidth = parseFloat(options.frontWidth);
     const rearWidth  = parseFloat(options.rearWidth);
     printWheels([
+        { front: frontWheel.relip(frontWidth-1),   rear: rearWheel.relip(rearWidth-1) },
         { front: frontWheel.relip(frontWidth-0.5), rear: rearWheel.relip(rearWidth-0.5) },
         { front: frontWheel.relip(frontWidth),     rear: rearWheel.relip(rearWidth), highlight: true },
         { front: frontWheel.relip(frontWidth+0.5), rear: rearWheel.relip(rearWidth+0.5) },
+        { front: frontWheel.relip(frontWidth+1),   rear: rearWheel.relip(rearWidth+1) },
     ]);
 });

@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Relipper",
-    "version": "1.0",
+    "version": "1.1",
     "background":
     {
         "scripts": ["jquery-3.3.1.min.js"]
